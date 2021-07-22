@@ -42,6 +42,8 @@
 #include <string.h>
 #include "inc/hw_memmap.h"
 #include "inc/hw_uart.h"
+#include "inc/hw_ints.h"
+#include "driverlib/interrupt.h"
 #include "inc/hw_types.h"
 #include "driverlib/fpu.h"
 #include "driverlib/gpio.h"
@@ -85,7 +87,6 @@
 // Macros used in this application.
 //
 //*****************************************************************************
-#define NUM_UART_DATA    4
 
 //*****************************************************************************
 //
@@ -98,6 +99,39 @@ __error__(char *pcFilename, uint32_t ui32Line)
 {
 }
 #endif
+
+void
+UART5IntHandler(void)
+{
+    uint32_t ui32Status;
+
+    //
+    // Get the interrupt status.
+    //
+    ui32Status = UARTIntStatus(UART5_BASE, true);
+
+    //
+    // Clear the asserted interrupts.
+    //
+    ROM_UARTIntClear(UART5_BASE, ui32Status);
+
+    if(((ui32Status & UART_INT_RX) == UART_INT_RX) || ((ui32Status & UART_INT_RT) == UART_INT_RT))
+    {
+        //
+        // Loop while there are characters in the receive FIFO.
+        //
+        while(UARTCharsAvail(UART5_BASE))
+        {
+            //
+            // Read the next character from the UART5 and write it back to the UART0
+            //
+            ROM_UARTCharPutNonBlocking(UART0_BASE,
+                                       ROM_UARTCharGetNonBlocking(UART5_BASE));
+        }
+
+    }
+
+}
 
 //*****************************************************************************
 //
@@ -135,9 +169,7 @@ main(void)
     defined(TARGET_IS_TM4C129_RA2)
     uint32_t ui32SysClock;
 #endif
-    uint8_t ui8DataTx[NUM_UART_DATA];
-    uint8_t ui8DataRx[NUM_UART_DATA];
-    uint32_t ui32index;
+
 
     //
     // Set the clocking to run directly from the crystal.
@@ -188,51 +220,32 @@ main(void)
 #if defined(TARGET_IS_TM4C129_RA0) ||                                         \
     defined(TARGET_IS_TM4C129_RA1) ||                                         \
     defined(TARGET_IS_TM4C129_RA2)
-    MAP_UARTConfigSetExpClk(UART0_BASE, ui32SysClock, 115200,
+    MAP_UARTConfigSetExpClk(UART0_BASE, ui32SysClock, 9600,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
-    MAP_UARTConfigSetExpClk(UART5_BASE, ui32SysClock, 115200,
+    MAP_UARTConfigSetExpClk(UART5_BASE, ui32SysClock, 9600,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
 #else
-    MAP_UARTConfigSetExpClk(UART0_BASE, MAP_SysCtlClockGet(), 115200,
+    MAP_UARTConfigSetExpClk(UART0_BASE, MAP_SysCtlClockGet(), 9600,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
-    MAP_UARTConfigSetExpClk(UART5_BASE, MAP_SysCtlClockGet(), 115200,
+    MAP_UARTConfigSetExpClk(UART5_BASE, MAP_SysCtlClockGet(), 9600,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
 #endif
 
     //
-    // Print banner after clearing the terminal.
+    // Enable the UART interrupt.
     //
-    UARTSend(UART0_BASE, (uint8_t *)"\033[2J\033[1;1H", 10);
-    UARTSend(UART0_BASE, (uint8_t *)"\nUART Loopback Example ->",
-             strlen("\nUART Loopback Example ->"));
+    ROM_IntEnable(INT_UART5);
+    ROM_UARTIntEnable(UART5_BASE, UART_INT_RX | UART_INT_RT);
 
-    //
-    // Prepare data to send over the UART configured for internal loopback.
-    //
-    ui8DataTx[0] = 'u';
-    ui8DataTx[1] = 'a';
-    ui8DataTx[2] = 'r';
-    ui8DataTx[3] = 't';
 
-    //
-    // Inform user that data is being sent over for internal loopback.
-    //
-    UARTSend(UART0_BASE, (uint8_t *)"\n\n\rSending : ",
-             strlen("\n\n\rSending : "));
-    UARTSend(UART0_BASE, (uint8_t*)ui8DataTx, NUM_UART_DATA);
+    UARTSend(UART0_BASE, (uint8_t *)"\n1. Check number of registered fingerprints\n",
+             strlen("\n1. Check number of registered fingerprints\n"));
 
-    //
-    // Send the data, which was prepared above, over the UART configured for
-    // internal loopback operation.
-    //
-    for(ui32index = 0 ; ui32index < NUM_UART_DATA ; ui32index++)
-    {
-        UARTCharPut(UART5_BASE, ui8DataTx[ui32index]);
-    }
+    UARTSend(UART5_BASE, (uint8_t*)"<C>CheckRegisteredNo</C>", strlen("<C>CheckRegisteredNo</C>"));
 
     //
     // Wait for the UART module to complete transmitting.
@@ -241,27 +254,7 @@ main(void)
     {
     }
 
-    //
-    // Inform user that data the loopback data is being received.
-    //
-    UARTSend(UART0_BASE, (uint8_t *)"\n\rReceiving : ",
-             strlen("\n\rReceiving : "));
-
-    //
-    // Read data from the UART's receive FIFO and store it.
-    //
-    for(ui32index = 0 ; ui32index < NUM_UART_DATA ; ui32index++)
-    {
-        //
-        // Get the data received by the UART at its receive FIFO
-        //
-        ui8DataRx[ui32index] = UARTCharGet(UART5_BASE);
-    }
-
-    //
-    // Display the data received, after loopback, over UART's receive FIFO.
-    //
-    UARTSend(UART0_BASE, (uint8_t*)ui8DataRx, NUM_UART_DATA);
+    while(1);
 
     //
     // Return no errors
