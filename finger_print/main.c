@@ -69,7 +69,7 @@
 //!
 //! This example uses the following peripherals and I/O signals.  You must
 //! review these and change as needed for your own board.
-//! - UART7 peripheral - For internal Loopback
+//! - UART5 peripheral - For internal Loopback
 //! - UART0 peripheral - As console to display debug messages.
 //!     - UART0RX - PA0
 //!     - UART0TX - PA1
@@ -155,12 +155,13 @@ main(void)
     //
     // Enable the peripherals used by this example.
     // UART0 :  To dump information to the console about the example.
-    // UART7 :  Enabled in loopback mode. Anything transmitted to Tx will be
+    // UART5 :  Enabled in loopback mode. Anything transmitted to Tx will be
     //          received at the Rx.
     //
     MAP_SysCtlPeripheralEnable(SYSCTL_PERIPH_UART0);
-    MAP_SysCtlPeripheralEnable(SYSCTL_PERIPH_UART7);
+    MAP_SysCtlPeripheralEnable(SYSCTL_PERIPH_UART5);
     MAP_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOA);
+    MAP_SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOE);
 
     //
     // Set GPIO A0 and A1 as UART pins.
@@ -170,9 +171,16 @@ main(void)
     MAP_GPIOPinTypeUART(GPIO_PORTA_BASE, GPIO_PIN_0 | GPIO_PIN_1);
 
     //
+    // Set GPIO E4 and E5 as UART pins.
+    //
+    GPIOPinConfigure(GPIO_PE4_U5RX);
+    GPIOPinConfigure(GPIO_PE5_U5TX);
+    MAP_GPIOPinTypeUART(GPIO_PORTE_BASE, GPIO_PIN_4 | GPIO_PIN_5);
+
+    //
     // Internal loopback programming.  Configure the UART in loopback mode.
     //
-    UARTLoopbackEnable(UART7_BASE);
+    //UARTLoopbackEnable(UART5_BASE);
 
     //
     // Configure the UART for 115,200, 8-N-1 operation.
@@ -183,14 +191,14 @@ main(void)
     MAP_UARTConfigSetExpClk(UART0_BASE, ui32SysClock, 115200,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
-    MAP_UARTConfigSetExpClk(UART7_BASE, ui32SysClock, 115200,
+    MAP_UARTConfigSetExpClk(UART5_BASE, ui32SysClock, 115200,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
 #else
     MAP_UARTConfigSetExpClk(UART0_BASE, MAP_SysCtlClockGet(), 115200,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
-    MAP_UARTConfigSetExpClk(UART7_BASE, MAP_SysCtlClockGet(), 115200,
+    MAP_UARTConfigSetExpClk(UART5_BASE, MAP_SysCtlClockGet(), 115200,
                             (UART_CONFIG_WLEN_8 | UART_CONFIG_STOP_ONE |
                              UART_CONFIG_PAR_NONE));
 #endif
@@ -223,13 +231,13 @@ main(void)
     //
     for(ui32index = 0 ; ui32index < NUM_UART_DATA ; ui32index++)
     {
-        UARTCharPut(UART7_BASE, ui8DataTx[ui32index]);
+        UARTCharPut(UART5_BASE, ui8DataTx[ui32index]);
     }
 
     //
     // Wait for the UART module to complete transmitting.
     //
-    while(MAP_UARTBusy(UART7_BASE))
+    while(MAP_UARTBusy(UART5_BASE))
     {
     }
 
@@ -247,7 +255,7 @@ main(void)
         //
         // Get the data received by the UART at its receive FIFO
         //
-        ui8DataRx[ui32index] = UARTCharGet(UART7_BASE);
+        ui8DataRx[ui32index] = UARTCharGet(UART5_BASE);
     }
 
     //
