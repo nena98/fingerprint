@@ -242,11 +242,10 @@ main(void)
     ROM_UARTIntEnable(UART5_BASE, UART_INT_RX | UART_INT_RT);
 
     //write available options
-    UARTSend(UART0_BASE, (uint8_t *)"1. Check number of registered fingerprints\n",
-                         strlen("1. Check number of registered fingerprints\n"));
-    UARTSend(UART0_BASE, (uint8_t *)"2. Register fingerprint\n",
-                             strlen("2. Register fingerprint\n"));
-
+    UARTSend(UART0_BASE, (uint8_t *)"\033[2J\033[H1. Check number of registered fingerprints\r\n",
+                         strlen("\033[2J\033[H\1. Check number of registered fingerprints\r\n"));
+    UARTSend(UART0_BASE, (uint8_t *)"2. Register fingerprint\r\n",
+                             strlen("2. Register fingerprint\r\n"));
     //
     // Wait for the UART module to complete transmitting.
     //
