@@ -241,11 +241,9 @@ main(void)
     ROM_IntEnable(INT_UART5);
     ROM_UARTIntEnable(UART5_BASE, UART_INT_RX | UART_INT_RT);
 
-
-    UARTSend(UART0_BASE, (uint8_t *)"\n1. Check number of registered fingerprints\n",
-             strlen("\n1. Check number of registered fingerprints\n"));
-
-    UARTSend(UART5_BASE, (uint8_t*)"<C>CheckRegisteredNo</C>", strlen("<C>CheckRegisteredNo</C>"));
+    //write available options
+    UARTSend(UART0_BASE, (uint8_t *)"1. Check number of registered fingerprints\n",
+                         strlen("1. Check number of registered fingerprints\n"));
 
     //
     // Wait for the UART module to complete transmitting.
@@ -254,7 +252,21 @@ main(void)
     {
     }
 
-    while(1);
+    while(1)
+    {
+        //wait for user to choose option
+        uint8_t number = ROM_UARTCharGet(UART0_BASE);
+
+        switch(number)
+        {
+        case '1':
+            UARTSend(UART5_BASE, (uint8_t*)"<C>CheckRegisteredNo</C>", strlen("<C>CheckRegisteredNo</C>"));
+            break;
+
+        default:
+            break;
+        }
+    }
 
     //
     // Return no errors
