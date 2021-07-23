@@ -244,6 +244,8 @@ main(void)
     //write available options
     UARTSend(UART0_BASE, (uint8_t *)"1. Check number of registered fingerprints\n",
                          strlen("1. Check number of registered fingerprints\n"));
+    UARTSend(UART0_BASE, (uint8_t *)"2. Register fingerprint\n",
+                             strlen("2. Register fingerprint\n"));
 
     //
     // Wait for the UART module to complete transmitting.
@@ -262,7 +264,9 @@ main(void)
         case '1':
             UARTSend(UART5_BASE, (uint8_t*)"<C>CheckRegisteredNo</C>", strlen("<C>CheckRegisteredNo</C>"));
             break;
-
+        case '2':
+            UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=0</C>", strlen("<C>RegisterOneFp=0</C>"));
+            break;
         default:
             break;
         }
