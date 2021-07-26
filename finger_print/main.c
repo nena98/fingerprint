@@ -247,7 +247,7 @@ main(void)
     UARTSend(UART0_BASE, (uint8_t *)"2. Register fingerprint\r\n",
                              strlen("2. Register fingerprint\r\n"));
     UARTSend(UART0_BASE, (uint8_t *)"3. Compare fingerprint\r\n", strlen("2. Compare fingerprint\r\n"));
-
+    UARTSend(UART0_BASE, (uint8_t *)"4. Query fingerprint information\r\n", strlen("2. Query fingerprint information\r\n"));
     //
     // Wait for the UART module to complete transmitting.
     //
@@ -381,6 +381,9 @@ main(void)
             break;
         case '3':
             UARTSend(UART5_BASE, (uint8_t*)"<C>CompareFingerprint</C>", strlen("<C>CompareFingerprint</C>"));
+            break;
+        case '4':
+            UARTSend(UART5_BASE, (uint8_t*)"<C>FpImageInformation</C>", strlen("<C>FpImageInformation</C>"));
             break;
         default:
             break;
