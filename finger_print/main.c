@@ -246,6 +246,8 @@ main(void)
                          strlen("\033[2J\033[H\1. Check number of registered fingerprints\r\n"));
     UARTSend(UART0_BASE, (uint8_t *)"2. Register fingerprint\r\n",
                              strlen("2. Register fingerprint\r\n"));
+    UARTSend(UART0_BASE, (uint8_t *)"3. Compare fingerprint\r\n", strlen("2. Compare fingerprint\r\n"));
+
     //
     // Wait for the UART module to complete transmitting.
     //
@@ -376,6 +378,9 @@ main(void)
             default:
                 break;
             }
+            break;
+        case '3':
+            UARTSend(UART5_BASE, (uint8_t*)"<C>CompareFingerprint</C>", strlen("<C>CompareFingerprint</C>"));
             break;
         default:
             break;
