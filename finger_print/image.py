@@ -28,8 +28,9 @@ while 1 :
 		
 		#wait for user to put fingerprint
 		time.sleep(10)
+		out1 = bytearray(b'')
 		while ser.inWaiting() > 0:
-			out1 = ser.read(1)
-			print(out1)
+			out1.extend(ser.read(1))
+		print(out1)
 
 
