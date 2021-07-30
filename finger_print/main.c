@@ -249,6 +249,7 @@ main(void)
     UARTSend(UART0_BASE, (uint8_t *)"3. Compare fingerprint\r\n", strlen("3. Compare fingerprint\r\n"));
     UARTSend(UART0_BASE, (uint8_t *)"4. Query fingerprint information\r\n", strlen("4. Query fingerprint information\r\n"));
     UARTSend(UART0_BASE, (uint8_t *)"5. Scan and upload fingerprint image\r\n", strlen("5. Scan and upload fingerprint image\r\n"));
+    UARTSend(UART0_BASE, (uint8_t *)"6. Clear registered fingerprint\r\n", strlen("6. Clear registered fingerprint\r\n"));
 
     //
     // Wait for the UART module to complete transmitting.
@@ -389,6 +390,120 @@ main(void)
             break;
         case '5':
             UARTSend(UART5_BASE, (uint8_t*)"<C>ScanFpImage</C>", strlen("<C>ScanFpImage</C>"));
+            break;
+        case '6':
+            UARTSend(UART0_BASE, (uint8_t *)"Enter index to clear fingerprint\r\n",
+                                                         strlen("Enter index to delete fingerprint\r\n"));
+
+            //write menu
+            UARTSend(UART0_BASE, (uint8_t *)"a. 0-index\r\n", strlen("a. 0-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"b. 1-index\r\n", strlen("b. 1-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"c. 2-index\r\n", strlen("c. 2-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"d. 3-index\r\n", strlen("d. 3-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"e. 4-index\r\n", strlen("e. 4-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"f. 5-index\r\n", strlen("f. 5-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"g. 6-index\r\n", strlen("g. 6-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"h. 7-index\r\n", strlen("h. 7-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"i. 8-index\r\n", strlen("i. 8-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"j. 9-index\r\n", strlen("j. 9-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"k. 10-index\r\n", strlen("k. 10-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"l. 11-index\r\n", strlen("l. 11-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"m. 12-index\r\n", strlen("m. 12-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"n. 13-index\r\n", strlen("n. 13-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"o. 14-index\r\n", strlen("o. 14-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"p. 15-index\r\n", strlen("p. 15-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"q. 16-index\r\n", strlen("q. 16-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"r. 17-index\r\n", strlen("r. 17-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"s. 18-index\r\n", strlen("s. 18-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"t. 19-index\r\n", strlen("t. 19-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"u. 20-index\r\n", strlen("u. 20-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"v. 21-index\r\n", strlen("v. 21-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"w. 22-index\r\n", strlen("w. 22-index\r\n"));
+            UARTSend(UART0_BASE, (uint8_t *)"x. 23-index\r\n", strlen("x. 23-index\r\n"));
+
+            //wait for user to enter index
+            uint8_t del_index;
+
+            del_index = ROM_UARTCharGet(UART0_BASE);
+
+
+            switch(del_index)
+            {
+            case 'a':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=0</C>", strlen("<C>ClearOneFp=0</C>"));
+                break;
+            case 'b':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=1</C>", strlen("<C>ClearOneFp=1</C>"));
+                break;
+            case 'c':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=2</C>", strlen("<C>ClearOneFp=2</C>"));
+                break;
+            case 'd':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=3</C>", strlen("<C>ClearOneFp=3</C>"));
+                break;
+            case 'e':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=4</C>", strlen("<C>ClearOneFp=4</C>"));
+                break;
+            case 'f':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=5</C>", strlen("<C>ClearOneFp=5</C>"));
+                break;
+            case 'g':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=6</C>", strlen("<C>ClearOneFp=6</C>"));
+                break;
+            case 'h':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=7</C>", strlen("<C>ClearOneFp=7</C>"));
+                break;
+            case 'i':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=8</C>", strlen("<C>ClearOneFp=8</C>"));
+                break;
+            case 'j':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=9</C>", strlen("<C>ClearOneFp=9</C>"));
+                break;
+            case 'k':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=10</C>", strlen("<C>ClearOneFp=10</C>"));
+                break;
+            case 'l':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=11</C>", strlen("<C>ClearOneFp=11</C>"));
+                break;
+            case 'm':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=12</C>", strlen("<C>ClearOneFp=12</C>"));
+                break;
+            case 'n':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=13</C>", strlen("<C>ClearOneFp=13</C>"));
+                break;
+            case 'o':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=14</C>", strlen("<C>ClearOneFp=14</C>"));
+                break;
+            case 'p':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=15</C>", strlen("<C>ClearOneFp=15</C>"));
+                break;
+            case 'q':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=16</C>", strlen("<C>ClearOneFp=16</C>"));
+                break;
+            case 'r':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=17</C>", strlen("<C>ClearOneFp=17</C>"));
+                break;
+            case 's':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=18</C>", strlen("<C>ClearOneFp=18</C>"));
+                break;
+            case 't':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=19</C>", strlen("<C>ClearOneFp=19</C>"));
+                break;
+            case 'u':
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=20</C>", strlen("<C>ClearOneFp=20</C>"));
+                break;
+            case ('v'):
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=21</C>", strlen("<C>ClearOneFp=21</C>"));
+                break;
+            case ('w'):
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=22</C>", strlen("<C>ClearOneFp=22</C>"));
+                break;
+            case ('x'):
+                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=23</C>", strlen("<C>ClearOneFp=23</C>"));
+                break;
+            default:
+                break;
+            }
             break;
         default:
             break;
