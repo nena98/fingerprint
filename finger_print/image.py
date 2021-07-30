@@ -1,5 +1,6 @@
 import time
 import serial
+import PIL.Image as Image
 
 # configure the serial connections
 ser = serial.Serial(
@@ -32,13 +33,13 @@ while 1 :
 		while ser.inWaiting() > 0:
 			out1.extend(ser.read(1))
 			time.sleep(0.001)
-		print(out1)
 		start_index = out1.find(b'<I>')
 		end_index = out1.find(b'</I>')
-		print("\n")
 		print(start_index)
 		print(end_index)
 		out1 = out1[(start_index+3):end_index]
-		print(out1)
-
+		
+		img = Image.new('RGB', (176, 176))
+		img.putdata(out1)
+		img.save('fingerprint.png')
 
