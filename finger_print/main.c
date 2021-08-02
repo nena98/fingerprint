@@ -295,6 +295,8 @@ void registerOneFp(uint8_t index)
         UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=23</C>", strlen("<C>RegisterOneFp=23</C>"));
         break;
     default:
+        UARTSend(UART0_BASE, (uint8_t*)"Wrong input! Press anything to continue!\r\n",
+                                         strlen("Wrong input! Press anything to continue!\r\n"));
         break;
     }
 }
@@ -391,6 +393,8 @@ void clearOneFp(uint8_t delete_index)
         UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=23</C>", strlen("<C>ClearOneFp=23</C>"));
         break;
     default:
+        UARTSend(UART0_BASE, (uint8_t*)"Wrong input! Press anything to continue!\r\n",
+                                                 strlen("Wrong input! Press anything to continue!\r\n"));
         break;
     }
 }
