@@ -209,6 +209,12 @@ void writeIndexMenu()
     UARTSend(UART0_BASE, (uint8_t *)"w. 22-index\r\n", strlen("w. 22-index\r\n"));
     UARTSend(UART0_BASE, (uint8_t *)"x. 23-index\r\n", strlen("x. 23-index\r\n"));
 }
+
+uint8_t terminalRead()
+{
+    uint8_t input  = ROM_UARTCharGet(UART0_BASE);
+    return input;
+}
 //*****************************************************************************
 //
 // Configue UART in internal loopback mode and tranmsit and receive data
@@ -301,7 +307,7 @@ main(void)
     while(1)
     {
         //wait for user to choose option
-        uint8_t number = ROM_UARTCharGet(UART0_BASE);
+        uint8_t number = terminalRead();
 
         switch(number)
         {
@@ -312,10 +318,7 @@ main(void)
             writeIndexMenu();
 
             //wait for user to enter index
-            uint8_t index;
-
-            index = ROM_UARTCharGet(UART0_BASE);
-
+            uint8_t index = terminalRead();
 
             switch(index)
             {
@@ -435,10 +438,7 @@ main(void)
             UARTSend(UART0_BASE, (uint8_t *)"x. 23-index\r\n", strlen("x. 23-index\r\n"));
 
             //wait for user to enter index
-            uint8_t del_index;
-
-            del_index = ROM_UARTCharGet(UART0_BASE);
-
+            uint8_t del_index = terminalRead();
 
             switch(del_index)
             {
