@@ -154,6 +154,25 @@ UARTSend(uint32_t ui32UARTBase, const uint8_t *pui8Buffer, uint32_t ui32Count)
     }
 }
 
+void startOptions()
+{
+    //write available options
+    UARTSend(UART0_BASE, (uint8_t *)"\033[2J\033[H1. Check number of registered fingerprints\r\n",
+                             strlen("\033[2J\033[H1. Check number of registered fingerprints\r\n"));
+    UARTSend(UART0_BASE, (uint8_t *)"2. Register fingerprint\r\n",
+                                 strlen("2. Register fingerprint\r\n"));
+    UARTSend(UART0_BASE, (uint8_t *)"3. Compare fingerprint\r\n", strlen("3. Compare fingerprint\r\n"));
+    UARTSend(UART0_BASE, (uint8_t *)"4. Query fingerprint information\r\n", strlen("4. Query fingerprint information\r\n"));
+    UARTSend(UART0_BASE, (uint8_t *)"5. Scan and upload fingerprint image\r\n", strlen("5. Scan and upload fingerprint image\r\n"));
+    UARTSend(UART0_BASE, (uint8_t *)"6. Clear registered fingerprint\r\n", strlen("6. Clear registered fingerprint\r\n"));
+
+    //
+    // Wait for the UART module to complete transmitting.
+    //
+    while(MAP_UARTBusy(UART0_BASE))
+    {
+    }
+}
 //*****************************************************************************
 //
 // Configue UART in internal loopback mode and tranmsit and receive data
@@ -241,22 +260,7 @@ main(void)
     ROM_IntEnable(INT_UART5);
     ROM_UARTIntEnable(UART5_BASE, UART_INT_RX | UART_INT_RT);
 
-    //write available options
-    UARTSend(UART0_BASE, (uint8_t *)"\033[2J\033[H1. Check number of registered fingerprints\r\n",
-                         strlen("\033[2J\033[H\1. Check number of registered fingerprints\r\n"));
-    UARTSend(UART0_BASE, (uint8_t *)"2. Register fingerprint\r\n",
-                             strlen("2. Register fingerprint\r\n"));
-    UARTSend(UART0_BASE, (uint8_t *)"3. Compare fingerprint\r\n", strlen("3. Compare fingerprint\r\n"));
-    UARTSend(UART0_BASE, (uint8_t *)"4. Query fingerprint information\r\n", strlen("4. Query fingerprint information\r\n"));
-    UARTSend(UART0_BASE, (uint8_t *)"5. Scan and upload fingerprint image\r\n", strlen("5. Scan and upload fingerprint image\r\n"));
-    UARTSend(UART0_BASE, (uint8_t *)"6. Clear registered fingerprint\r\n", strlen("6. Clear registered fingerprint\r\n"));
-
-    //
-    // Wait for the UART module to complete transmitting.
-    //
-    while(MAP_UARTBusy(UART5_BASE))
-    {
-    }
+    startOptions();
 
     while(1)
     {
