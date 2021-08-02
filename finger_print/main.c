@@ -392,6 +392,43 @@ void clearOneFp(uint8_t delete_index)
         break;
     }
 }
+
+void sendCommand(uint8_t cmd)
+{
+    switch(cmd)
+    {
+    case '1':
+        checkRegisteredNumber();
+        break;
+    case '2':
+        writeIndexMenu();
+
+        //wait for user to enter index
+        uint8_t index = terminalRead();
+
+        registerOneFp(index);
+        break;
+    case '3':
+        compareFingerprint();
+        break;
+    case '4':
+        fpImageInformation();
+        break;
+    case '5':
+        scanFpImage();
+        break;
+    case '6':
+        writeIndexMenu();
+
+        //wait for user to enter index
+        uint8_t del_index = terminalRead();
+
+        clearOneFp(del_index);
+        break;
+    default:
+        break;
+    }
+}
 //*****************************************************************************
 //
 // Configue UART in internal loopback mode and tranmsit and receive data
@@ -486,39 +523,7 @@ main(void)
         //wait for user to choose option
         uint8_t number = terminalRead();
 
-        switch(number)
-        {
-        case '1':
-            checkRegisteredNumber();
-            break;
-        case '2':
-            writeIndexMenu();
-
-            //wait for user to enter index
-            uint8_t index = terminalRead();
-
-            registerOneFp(index);
-            break;
-        case '3':
-            compareFingerprint();
-            break;
-        case '4':
-            fpImageInformation();
-            break;
-        case '5':
-            scanFpImage();
-            break;
-        case '6':
-            writeIndexMenu();
-
-            //wait for user to enter index
-            uint8_t del_index = terminalRead();
-
-            clearOneFp(del_index);
-            break;
-        default:
-            break;
-        }
+        sendCommand(number);
     }
 
     //
