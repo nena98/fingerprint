@@ -215,6 +215,87 @@ uint8_t terminalRead()
     uint8_t input  = ROM_UARTCharGet(UART0_BASE);
     return input;
 }
+
+void registerOneFp(uint8_t index)
+{
+    switch(index)
+    {
+    case 'a':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=0</C>", strlen("<C>RegisterOneFp=0</C>"));
+        break;
+    case 'b':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=1</C>", strlen("<C>RegisterOneFp=1</C>"));
+        break;
+    case 'c':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=2</C>", strlen("<C>RegisterOneFp=2</C>"));
+        break;
+    case 'd':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=3</C>", strlen("<C>RegisterOneFp=3</C>"));
+        break;
+    case 'e':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=4</C>", strlen("<C>RegisterOneFp=4</C>"));
+        break;
+    case 'f':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=5</C>", strlen("<C>RegisterOneFp=5</C>"));
+        break;
+    case 'g':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=6</C>", strlen("<C>RegisterOneFp=6</C>"));
+        break;
+    case 'h':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=7</C>", strlen("<C>RegisterOneFp=7</C>"));
+        break;
+    case 'i':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=8</C>", strlen("<C>RegisterOneFp=8</C>"));
+        break;
+    case 'j':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=9</C>", strlen("<C>RegisterOneFp=9</C>"));
+        break;
+    case 'k':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=10</C>", strlen("<C>RegisterOneFp=10</C>"));
+        break;
+    case 'l':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=11</C>", strlen("<C>RegisterOneFp=11</C>"));
+        break;
+    case 'm':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=12</C>", strlen("<C>RegisterOneFp=12</C>"));
+        break;
+    case 'n':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=13</C>", strlen("<C>RegisterOneFp=13</C>"));
+        break;
+    case 'o':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=14</C>", strlen("<C>RegisterOneFp=14</C>"));
+        break;
+    case 'p':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=15</C>", strlen("<C>RegisterOneFp=15</C>"));
+        break;
+    case 'q':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=16</C>", strlen("<C>RegisterOneFp=16</C>"));
+        break;
+    case 'r':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=17</C>", strlen("<C>RegisterOneFp=17</C>"));
+        break;
+    case 's':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=18</C>", strlen("<C>RegisterOneFp=18</C>"));
+        break;
+    case 't':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=19</C>", strlen("<C>RegisterOneFp=19</C>"));
+        break;
+    case 'u':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=20</C>", strlen("<C>RegisterOneFp=20</C>"));
+        break;
+    case ('v'):
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=21</C>", strlen("<C>RegisterOneFp=21</C>"));
+        break;
+    case ('w'):
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=22</C>", strlen("<C>RegisterOneFp=22</C>"));
+        break;
+    case ('x'):
+        UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=23</C>", strlen("<C>RegisterOneFp=23</C>"));
+        break;
+    default:
+        break;
+    }
+}
 //*****************************************************************************
 //
 // Configue UART in internal loopback mode and tranmsit and receive data
@@ -320,83 +401,7 @@ main(void)
             //wait for user to enter index
             uint8_t index = terminalRead();
 
-            switch(index)
-            {
-            case 'a':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=0</C>", strlen("<C>RegisterOneFp=0</C>"));
-                break;
-            case 'b':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=1</C>", strlen("<C>RegisterOneFp=1</C>"));
-                break;
-            case 'c':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=2</C>", strlen("<C>RegisterOneFp=2</C>"));
-                break;
-            case 'd':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=3</C>", strlen("<C>RegisterOneFp=3</C>"));
-                break;
-            case 'e':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=4</C>", strlen("<C>RegisterOneFp=4</C>"));
-                break;
-            case 'f':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=5</C>", strlen("<C>RegisterOneFp=5</C>"));
-                break;
-            case 'g':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=6</C>", strlen("<C>RegisterOneFp=6</C>"));
-                break;
-            case 'h':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=7</C>", strlen("<C>RegisterOneFp=7</C>"));
-                break;
-            case 'i':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=8</C>", strlen("<C>RegisterOneFp=8</C>"));
-                break;
-            case 'j':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=9</C>", strlen("<C>RegisterOneFp=9</C>"));
-                break;
-            case 'k':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=10</C>", strlen("<C>RegisterOneFp=10</C>"));
-                break;
-            case 'l':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=11</C>", strlen("<C>RegisterOneFp=11</C>"));
-                break;
-            case 'm':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=12</C>", strlen("<C>RegisterOneFp=12</C>"));
-                break;
-            case 'n':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=13</C>", strlen("<C>RegisterOneFp=13</C>"));
-                break;
-            case 'o':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=14</C>", strlen("<C>RegisterOneFp=14</C>"));
-                break;
-            case 'p':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=15</C>", strlen("<C>RegisterOneFp=15</C>"));
-                break;
-            case 'q':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=16</C>", strlen("<C>RegisterOneFp=16</C>"));
-                break;
-            case 'r':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=17</C>", strlen("<C>RegisterOneFp=17</C>"));
-                break;
-            case 's':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=18</C>", strlen("<C>RegisterOneFp=18</C>"));
-                break;
-            case 't':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=19</C>", strlen("<C>RegisterOneFp=19</C>"));
-                break;
-            case 'u':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=20</C>", strlen("<C>RegisterOneFp=20</C>"));
-                break;
-            case ('v'):
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=21</C>", strlen("<C>RegisterOneFp=21</C>"));
-                break;
-            case ('w'):
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=22</C>", strlen("<C>RegisterOneFp=22</C>"));
-                break;
-            case ('x'):
-                UARTSend(UART5_BASE, (uint8_t*)"<C>RegisterOneFp=23</C>", strlen("<C>RegisterOneFp=23</C>"));
-                break;
-            default:
-                break;
-            }
+            registerOneFp(index);
             break;
         case '3':
             UARTSend(UART5_BASE, (uint8_t*)"<C>CompareFingerprint</C>", strlen("<C>CompareFingerprint</C>"));
