@@ -173,6 +173,11 @@ void startOptions()
     {
     }
 }
+
+void checkRegisteredNumber()
+{
+    UARTSend(UART5_BASE, (uint8_t*)"<C>CheckRegisteredNo</C>", strlen("<C>CheckRegisteredNo</C>"));
+}
 //*****************************************************************************
 //
 // Configue UART in internal loopback mode and tranmsit and receive data
@@ -270,7 +275,7 @@ main(void)
         switch(number)
         {
         case '1':
-            UARTSend(UART5_BASE, (uint8_t*)"<C>CheckRegisteredNo</C>", strlen("<C>CheckRegisteredNo</C>"));
+            checkRegisteredNumber();
             break;
         case '2':
             UARTSend(UART0_BASE, (uint8_t *)"Enter index to register fingerprint\r\n",
