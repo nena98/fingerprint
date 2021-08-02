@@ -306,6 +306,11 @@ void fpImageInformation()
 {
     UARTSend(UART5_BASE, (uint8_t*)"<C>FpImageInformation</C>", strlen("<C>FpImageInformation</C>"));
 }
+
+void scanFpImage()
+{
+    UARTSend(UART5_BASE, (uint8_t*)"<C>ScanFpImage</C>", strlen("<C>ScanFpImage</C>"));
+}
 //*****************************************************************************
 //
 // Configue UART in internal loopback mode and tranmsit and receive data
@@ -420,7 +425,7 @@ main(void)
             fpImageInformation();
             break;
         case '5':
-            UARTSend(UART5_BASE, (uint8_t*)"<C>ScanFpImage</C>", strlen("<C>ScanFpImage</C>"));
+            scanFpImage();
             break;
         case '6':
             UARTSend(UART0_BASE, (uint8_t *)"Enter index to clear fingerprint\r\n",
