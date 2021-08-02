@@ -296,6 +296,11 @@ void registerOneFp(uint8_t index)
         break;
     }
 }
+
+void compareFingerprint()
+{
+    UARTSend(UART5_BASE, (uint8_t*)"<C>CompareFingerprint</C>", strlen("<C>CompareFingerprint</C>"));
+}
 //*****************************************************************************
 //
 // Configue UART in internal loopback mode and tranmsit and receive data
@@ -404,7 +409,7 @@ main(void)
             registerOneFp(index);
             break;
         case '3':
-            UARTSend(UART5_BASE, (uint8_t*)"<C>CompareFingerprint</C>", strlen("<C>CompareFingerprint</C>"));
+            compareFingerprint();
             break;
         case '4':
             UARTSend(UART5_BASE, (uint8_t*)"<C>FpImageInformation</C>", strlen("<C>FpImageInformation</C>"));
