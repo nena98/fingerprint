@@ -311,6 +311,87 @@ void scanFpImage()
 {
     UARTSend(UART5_BASE, (uint8_t*)"<C>ScanFpImage</C>", strlen("<C>ScanFpImage</C>"));
 }
+
+void clearOneFp(uint8_t delete_index)
+{
+    switch(delete_index)
+    {
+    case 'a':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=0</C>", strlen("<C>ClearOneFp=0</C>"));
+        break;
+    case 'b':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=1</C>", strlen("<C>ClearOneFp=1</C>"));
+        break;
+    case 'c':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=2</C>", strlen("<C>ClearOneFp=2</C>"));
+        break;
+    case 'd':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=3</C>", strlen("<C>ClearOneFp=3</C>"));
+        break;
+    case 'e':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=4</C>", strlen("<C>ClearOneFp=4</C>"));
+        break;
+    case 'f':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=5</C>", strlen("<C>ClearOneFp=5</C>"));
+        break;
+    case 'g':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=6</C>", strlen("<C>ClearOneFp=6</C>"));
+        break;
+    case 'h':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=7</C>", strlen("<C>ClearOneFp=7</C>"));
+        break;
+    case 'i':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=8</C>", strlen("<C>ClearOneFp=8</C>"));
+        break;
+    case 'j':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=9</C>", strlen("<C>ClearOneFp=9</C>"));
+        break;
+    case 'k':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=10</C>", strlen("<C>ClearOneFp=10</C>"));
+        break;
+    case 'l':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=11</C>", strlen("<C>ClearOneFp=11</C>"));
+        break;
+    case 'm':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=12</C>", strlen("<C>ClearOneFp=12</C>"));
+        break;
+    case 'n':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=13</C>", strlen("<C>ClearOneFp=13</C>"));
+        break;
+    case 'o':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=14</C>", strlen("<C>ClearOneFp=14</C>"));
+        break;
+    case 'p':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=15</C>", strlen("<C>ClearOneFp=15</C>"));
+        break;
+    case 'q':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=16</C>", strlen("<C>ClearOneFp=16</C>"));
+        break;
+    case 'r':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=17</C>", strlen("<C>ClearOneFp=17</C>"));
+        break;
+    case 's':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=18</C>", strlen("<C>ClearOneFp=18</C>"));
+        break;
+    case 't':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=19</C>", strlen("<C>ClearOneFp=19</C>"));
+        break;
+    case 'u':
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=20</C>", strlen("<C>ClearOneFp=20</C>"));
+        break;
+    case ('v'):
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=21</C>", strlen("<C>ClearOneFp=21</C>"));
+        break;
+    case ('w'):
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=22</C>", strlen("<C>ClearOneFp=22</C>"));
+        break;
+    case ('x'):
+        UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=23</C>", strlen("<C>ClearOneFp=23</C>"));
+        break;
+    default:
+        break;
+    }
+}
 //*****************************************************************************
 //
 // Configue UART in internal loopback mode and tranmsit and receive data
@@ -433,83 +514,7 @@ main(void)
             //wait for user to enter index
             uint8_t del_index = terminalRead();
 
-            switch(del_index)
-            {
-            case 'a':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=0</C>", strlen("<C>ClearOneFp=0</C>"));
-                break;
-            case 'b':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=1</C>", strlen("<C>ClearOneFp=1</C>"));
-                break;
-            case 'c':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=2</C>", strlen("<C>ClearOneFp=2</C>"));
-                break;
-            case 'd':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=3</C>", strlen("<C>ClearOneFp=3</C>"));
-                break;
-            case 'e':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=4</C>", strlen("<C>ClearOneFp=4</C>"));
-                break;
-            case 'f':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=5</C>", strlen("<C>ClearOneFp=5</C>"));
-                break;
-            case 'g':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=6</C>", strlen("<C>ClearOneFp=6</C>"));
-                break;
-            case 'h':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=7</C>", strlen("<C>ClearOneFp=7</C>"));
-                break;
-            case 'i':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=8</C>", strlen("<C>ClearOneFp=8</C>"));
-                break;
-            case 'j':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=9</C>", strlen("<C>ClearOneFp=9</C>"));
-                break;
-            case 'k':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=10</C>", strlen("<C>ClearOneFp=10</C>"));
-                break;
-            case 'l':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=11</C>", strlen("<C>ClearOneFp=11</C>"));
-                break;
-            case 'm':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=12</C>", strlen("<C>ClearOneFp=12</C>"));
-                break;
-            case 'n':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=13</C>", strlen("<C>ClearOneFp=13</C>"));
-                break;
-            case 'o':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=14</C>", strlen("<C>ClearOneFp=14</C>"));
-                break;
-            case 'p':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=15</C>", strlen("<C>ClearOneFp=15</C>"));
-                break;
-            case 'q':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=16</C>", strlen("<C>ClearOneFp=16</C>"));
-                break;
-            case 'r':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=17</C>", strlen("<C>ClearOneFp=17</C>"));
-                break;
-            case 's':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=18</C>", strlen("<C>ClearOneFp=18</C>"));
-                break;
-            case 't':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=19</C>", strlen("<C>ClearOneFp=19</C>"));
-                break;
-            case 'u':
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=20</C>", strlen("<C>ClearOneFp=20</C>"));
-                break;
-            case ('v'):
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=21</C>", strlen("<C>ClearOneFp=21</C>"));
-                break;
-            case ('w'):
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=22</C>", strlen("<C>ClearOneFp=22</C>"));
-                break;
-            case ('x'):
-                UARTSend(UART5_BASE, (uint8_t*)"<C>ClearOneFp=23</C>", strlen("<C>ClearOneFp=23</C>"));
-                break;
-            default:
-                break;
-            }
+            clearOneFp(del_index);
             break;
         default:
             break;
