@@ -165,6 +165,8 @@ void startOptions()
     UARTSend(UART0_BASE, (uint8_t *)"4. Query fingerprint information\r\n", strlen("4. Query fingerprint information\r\n"));
     UARTSend(UART0_BASE, (uint8_t *)"5. Scan and upload fingerprint image\r\n", strlen("5. Scan and upload fingerprint image\r\n"));
     UARTSend(UART0_BASE, (uint8_t *)"6. Clear registered fingerprint\r\n", strlen("6. Clear registered fingerprint\r\n"));
+    UARTSend(UART0_BASE, (uint8_t *)"*After the previous option is done, press anything to continue!\r\n",
+                                             strlen("*After the previous option is done, press anything to continue!\r\n"));
 
     //
     // Wait for the UART module to complete transmitting.
@@ -516,14 +518,20 @@ main(void)
     ROM_IntEnable(INT_UART5);
     ROM_UARTIntEnable(UART5_BASE, UART_INT_RX | UART_INT_RT);
 
-    startOptions();
+
 
     while(1)
     {
+        startOptions();
+
         //wait for user to choose option
         uint8_t number = terminalRead();
 
         sendCommand(number);
+
+        //wait for user to press anything to continue
+        uint8_t next = terminalRead();
+
     }
 
     //
