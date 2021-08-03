@@ -76,6 +76,9 @@ Char taskUserInputStack[TASKSTACKSIZE];
 Task_Struct taskProcessingInputStruct;
 Char taskProcessingInputStack[TASKSTACKSIZE];
 
+Task_Struct taskDeviceRespondStruct;
+Char taskDeviceRespondStack[TASKSTACKSIZE];
+
 char cmd1[] = "<C>CheckRegisteredNo</C>";
 
 Void userInputTask(UArg arg0, UArg arg1)
@@ -106,6 +109,15 @@ Void processingInputTask(UArg arg0, UArg arg1)
         default:
             break;
         }
+
+    }
+}
+
+Void deviceRespondTask(UArg arg0, UArg arg1)
+{
+
+    while(1)
+    {
 
     }
 }
@@ -176,6 +188,14 @@ int main(void)
     taskProcessingInputParams.stack = &taskProcessingInputStack;
     taskProcessingInputParams.instance->name = "processing input";
     Task_construct(&taskProcessingInputStruct, (Task_FuncPtr)processingInputTask, &taskProcessingInputParams, NULL);
+
+    Task_Params taskDeviceRespondParams;
+
+    Task_Params_init(&taskDeviceRespondParams);
+    taskDeviceRespondParams.stackSize = TASKSTACKSIZE;
+    taskDeviceRespondParams.stack = &taskDeviceRespondStack;
+    taskDeviceRespondParams.instance->name = "device respond";
+    Task_construct(&taskDeviceRespondStruct, (Task_FuncPtr)deviceRespondTask, &taskDeviceRespondParams, NULL);
 
     /* Turn on user LED */
     GPIO_write(Board_LED0, Board_LED_ON);
