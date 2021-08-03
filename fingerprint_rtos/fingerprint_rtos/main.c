@@ -73,6 +73,9 @@ Mailbox_Handle mbxHandle;
 Task_Struct taskUserInputStruct;
 Char taskUserInputStack[TASKSTACKSIZE];
 
+Task_Struct taskProcessingInputStruct;
+Char taskProcessingInputStack[TASKSTACKSIZE];
+
 Void userInputTask(UArg arg0, UArg arg1)
 {
     MsgObj msg;
@@ -82,6 +85,15 @@ Void userInputTask(UArg arg0, UArg arg1)
         UART_read(uart0, &msg.cmd, 1);
 
         Mailbox_post(mbxHandle, &msg,  BIOS_WAIT_FOREVER);
+    }
+}
+
+Void processingInputTask(UArg arg0, UArg arg1)
+{
+
+    while(1)
+    {
+
     }
 }
 
@@ -135,6 +147,7 @@ int main(void)
     Mailbox_construct(&mbxStruct, sizeof(MsgObj), NUMMSGS, &mbxParams, NULL);
     mbxHandle = Mailbox_handle(&mbxStruct);
 
+    /* Create tasks*/
     Task_Params taskUserInputParams;
 
     Task_Params_init(&taskUserInputParams);
@@ -142,6 +155,14 @@ int main(void)
     taskUserInputParams.stack = &taskUserInputStack;
     taskUserInputParams.instance->name = "user input";
     Task_construct(&taskUserInputStruct, (Task_FuncPtr)userInputTask, &taskUserInputParams, NULL);
+
+    Task_Params taskProcessingInputParams;
+
+    Task_Params_init(&taskProcessingInputParams);
+    taskProcessingInputParams.stackSize = TASKSTACKSIZE;
+    taskProcessingInputParams.stack = &taskProcessingInputStack;
+    taskProcessingInputParams.instance->name = "processing input";
+    Task_construct(&taskProcessingInputStruct, (Task_FuncPtr)processingInputTask, &taskProcessingInputParams, NULL);
 
     /* Turn on user LED */
     GPIO_write(Board_LED0, Board_LED_ON);
