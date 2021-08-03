@@ -180,6 +180,7 @@ int main(void)
     Task_Params_init(&taskUserInputParams);
     taskUserInputParams.stackSize = TASKSTACKSIZE;
     taskUserInputParams.stack = &taskUserInputStack;
+    taskUserInputParams.priority = 2;
     taskUserInputParams.instance->name = "user input";
     Task_construct(&taskUserInputStruct, (Task_FuncPtr)userInputTask, &taskUserInputParams, NULL);
 
@@ -188,6 +189,7 @@ int main(void)
     Task_Params_init(&taskProcessingInputParams);
     taskProcessingInputParams.stackSize = TASKSTACKSIZE;
     taskProcessingInputParams.stack = &taskProcessingInputStack;
+    taskProcessingInputParams.priority = 2;
     taskProcessingInputParams.instance->name = "processing input";
     Task_construct(&taskProcessingInputStruct, (Task_FuncPtr)processingInputTask, &taskProcessingInputParams, NULL);
 
@@ -196,6 +198,7 @@ int main(void)
     Task_Params_init(&taskDeviceRespondParams);
     taskDeviceRespondParams.stackSize = TASKSTACKSIZE;
     taskDeviceRespondParams.stack = &taskDeviceRespondStack;
+    taskDeviceRespondParams.priority = 1;
     taskDeviceRespondParams.instance->name = "device respond";
     Task_construct(&taskDeviceRespondStruct, (Task_FuncPtr)deviceRespondTask, &taskDeviceRespondParams, NULL);
 
