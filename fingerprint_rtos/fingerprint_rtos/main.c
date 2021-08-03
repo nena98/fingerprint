@@ -75,9 +75,13 @@ Char taskUserInputStack[TASKSTACKSIZE];
 
 Void userInputTask(UArg arg0, UArg arg1)
 {
+    MsgObj msg;
+
     while(1)
     {
+        UART_read(uart0, &msg.cmd, 1);
 
+        Mailbox_post(mbxHandle, &msg,  BIOS_WAIT_FOREVER);
     }
 }
 
