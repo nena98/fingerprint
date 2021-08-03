@@ -40,6 +40,7 @@
 /* BIOS Header files */
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Task.h>
+#include <ti/sysbios/knl/Mailbox.h>
 
 /* TI-RTOS Header files */
 #include <ti/drivers/GPIO.h>
@@ -52,6 +53,22 @@
 
 UART_Handle uart0;
 UART_Handle uart5;
+
+#define NUMMSGS         1
+
+typedef struct MsgObj {
+    Char    cmd;
+} MsgObj;
+
+typedef struct MailboxMsgObj {
+    Mailbox_MbxElem  elem;      /* Mailbox header        */
+    MsgObj           data;       /* Application's mailbox */
+} MailboxMsgObj;
+
+MailboxMsgObj mailboxBuffer[NUMMSGS];
+
+Mailbox_Struct mbxStruct;
+Mailbox_Handle mbxHandle;
 
 /*
  *  ======== main ========
@@ -93,6 +110,15 @@ int main(void)
     if (uart5 == NULL) {
         System_abort("Error opening the UART5");
     }
+
+    /* Create mailbox*/
+    Mailbox_Params mbxParams;
+
+    Mailbox_Params_init(&mbxParams);
+    mbxParams.buf = (Ptr)mailboxBuffer;
+    mbxParams.bufSize = sizeof(mailboxBuffer);
+    Mailbox_construct(&mbxStruct, sizeof(MsgObj), NUMMSGS, &mbxParams, NULL);
+    mbxHandle = Mailbox_handle(&mbxStruct);
 
     /* Turn on user LED */
     GPIO_write(Board_LED0, Board_LED_ON);
