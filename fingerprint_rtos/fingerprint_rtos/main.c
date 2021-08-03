@@ -51,6 +51,7 @@
 #define TASKSTACKSIZE   512
 
 UART_Handle uart0;
+UART_Handle uart5;
 
 /*
  *  ======== main ========
@@ -76,6 +77,21 @@ int main(void)
 
     if (uart0 == NULL) {
         System_abort("Error opening the UART0");
+    }
+
+    UART_Params uart5Params;
+
+    /* Create a UART5 with data processing off. */
+    UART_Params_init(&uart5Params);
+    uart5Params.writeDataMode = UART_DATA_BINARY;
+    uart5Params.readDataMode = UART_DATA_BINARY;
+    uart5Params.readReturnMode = UART_RETURN_FULL;
+    uart5Params.readEcho = UART_ECHO_OFF;
+    uart5Params.baudRate = 9600;
+    uart5 = UART_open(Board_UART5, &uart5Params);
+
+    if (uart5 == NULL) {
+        System_abort("Error opening the UART5");
     }
 
     /* Turn on user LED */
