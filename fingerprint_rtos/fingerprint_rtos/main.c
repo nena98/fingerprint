@@ -70,6 +70,17 @@ MailboxMsgObj mailboxBuffer[NUMMSGS];
 Mailbox_Struct mbxStruct;
 Mailbox_Handle mbxHandle;
 
+Task_Struct taskUserInputStruct;
+Char taskUserInputStack[TASKSTACKSIZE];
+
+Void userInputTask(UArg arg0, UArg arg1)
+{
+    while(1)
+    {
+
+    }
+}
+
 /*
  *  ======== main ========
  */
@@ -119,6 +130,14 @@ int main(void)
     mbxParams.bufSize = sizeof(mailboxBuffer);
     Mailbox_construct(&mbxStruct, sizeof(MsgObj), NUMMSGS, &mbxParams, NULL);
     mbxHandle = Mailbox_handle(&mbxStruct);
+
+    Task_Params taskUserInputParams;
+
+    Task_Params_init(&taskUserInputParams);
+    taskUserInputParams.stackSize = TASKSTACKSIZE;
+    taskUserInputParams.stack = &taskUserInputStack;
+    taskUserInputParams.instance->name = "user input";
+    Task_construct(&taskUserInputStruct, (Task_FuncPtr)userInputTask, &taskUserInputParams, NULL);
 
     /* Turn on user LED */
     GPIO_write(Board_LED0, Board_LED_ON);
