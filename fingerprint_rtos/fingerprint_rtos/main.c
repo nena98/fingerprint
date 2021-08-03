@@ -76,6 +76,8 @@ Char taskUserInputStack[TASKSTACKSIZE];
 Task_Struct taskProcessingInputStruct;
 Char taskProcessingInputStack[TASKSTACKSIZE];
 
+char cmd1[] = "<C>CheckRegisteredNo</C>";
+
 Void userInputTask(UArg arg0, UArg arg1)
 {
     MsgObj msg;
@@ -90,9 +92,20 @@ Void userInputTask(UArg arg0, UArg arg1)
 
 Void processingInputTask(UArg arg0, UArg arg1)
 {
+    MsgObj msg;
 
     while(1)
     {
+        Mailbox_pend(mbxHandle, &msg,  BIOS_WAIT_FOREVER);
+
+        switch(msg.cmd)
+        {
+        case '1':
+            UART_write(uart5, &cmd1, sizeof(cmd1));
+            break;
+        default:
+            break;
+        }
 
     }
 }
