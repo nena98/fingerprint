@@ -115,10 +115,12 @@ Void processingInputTask(UArg arg0, UArg arg1)
 
 Void deviceRespondTask(UArg arg0, UArg arg1)
 {
+    char data;
 
     while(1)
     {
-
+        UART_read(uart5, &data, 1);
+        UART_write(uart0, &data, 1);
     }
 }
 
