@@ -43,17 +43,14 @@
 
 /* TI-RTOS Header files */
 #include <ti/drivers/GPIO.h>
-// #include <ti/drivers/I2C.h>
-// #include <ti/drivers/SDSPI.h>
-// #include <ti/drivers/SPI.h>
-// #include <ti/drivers/UART.h>
-// #include <ti/drivers/Watchdog.h>
-// #include <ti/drivers/WiFi.h>
+#include <ti/drivers/UART.h>
 
 /* Board Header file */
 #include "Board.h"
 
 #define TASKSTACKSIZE   512
+
+UART_Handle uart0;
 
 /*
  *  ======== main ========
@@ -64,13 +61,22 @@ int main(void)
     /* Call board init functions */
     Board_initGeneral();
     Board_initGPIO();
-    // Board_initI2C();
-    // Board_initSDSPI();
-    // Board_initSPI();
-    // Board_initUART();
-    // Board_initUSB(Board_USBDEVICE);
-    // Board_initWatchdog();
-    // Board_initWiFi();
+    Board_initUART();
+
+    UART_Params uart0Params;
+
+    /* Create a UART0 with data processing off. */
+    UART_Params_init(&uart0Params);
+    uart0Params.writeDataMode = UART_DATA_BINARY;
+    uart0Params.readDataMode = UART_DATA_BINARY;
+    uart0Params.readReturnMode = UART_RETURN_FULL;
+    uart0Params.readEcho = UART_ECHO_OFF;
+    uart0Params.baudRate = 9600;
+    uart0 = UART_open(Board_UART0, &uart0Params);
+
+    if (uart0 == NULL) {
+        System_abort("Error opening the UART0");
+    }
 
     /* Turn on user LED */
     GPIO_write(Board_LED0, Board_LED_ON);
