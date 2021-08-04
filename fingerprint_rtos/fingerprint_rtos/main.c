@@ -89,6 +89,25 @@ void checkRegisteredNumber()
     UART_write(uart5, &cmd, sizeof(cmd));
 }
 
+void startOptions()
+{
+    char op1[] = "\033[2J\033[H1. Check number of registered fingerprints\r\n";
+    char op2[] = "2. Register fingerprint\r\n";
+    char op3[] = "3. Compare fingerprint\r\n";
+    char op4[] = "4. Query fingerprint information\r\n";
+    char op5[] = "5. Scan and upload fingerprint image\r\n";
+    char op6[] = "6. Clear registered fingerprint\r\n";
+    char op7[] = "*After the previous option is done, press anything to continue!\r\n";
+
+    UART_write(uart0, &op1, sizeof(op1));
+    UART_write(uart0, &op2, sizeof(op2));
+    UART_write(uart0, &op3, sizeof(op3));
+    UART_write(uart0, &op4, sizeof(op4));
+    UART_write(uart0, &op5, sizeof(op5));
+    UART_write(uart0, &op6, sizeof(op6));
+    UART_write(uart0, &op7, sizeof(op7));
+}
+
 Void startMenuTask(UArg arg0, UArg arg1)
 {
 
