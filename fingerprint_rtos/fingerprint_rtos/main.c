@@ -41,6 +41,7 @@
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Task.h>
 #include <ti/sysbios/knl/Mailbox.h>
+#include <ti/sysbios/knl/Event.h>
 
 /* TI-RTOS Header files */
 #include <ti/drivers/GPIO.h>
@@ -81,6 +82,9 @@ Char taskDeviceRespondStack[TASKSTACKSIZE];
 
 Task_Struct taskStartMenuStruct;
 Char taskStartMenuStack[TASKSTACKSIZE];
+
+Event_Struct evtStruct;
+Event_Handle evtHandle;
 
 void checkRegisteredNumber()
 {
@@ -246,6 +250,12 @@ int main(void)
     taskStartMenuParams.priority = 1;
     taskStartMenuParams.instance->name = "start menu";
     Task_construct(&taskStartMenuStruct, (Task_FuncPtr)startMenuTask, &taskStartMenuParams, NULL);
+
+    /* Create event*/
+    Event_construct(&evtStruct, NULL);
+
+    /* Obtain event instance handle */
+    evtHandle = Event_handle(&evtStruct);
 
     /* Turn on user LED */
     GPIO_write(Board_LED0, Board_LED_ON);
