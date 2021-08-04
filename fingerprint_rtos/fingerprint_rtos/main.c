@@ -79,11 +79,23 @@ Char taskProcessingInputStack[TASKSTACKSIZE];
 Task_Struct taskDeviceRespondStruct;
 Char taskDeviceRespondStack[TASKSTACKSIZE];
 
+Task_Struct taskStartMenuStruct;
+Char taskStartMenuStack[TASKSTACKSIZE];
+
 void checkRegisteredNumber()
 {
     char cmd[] = "<C>CheckRegisteredNo</C>";
 
     UART_write(uart5, &cmd, sizeof(cmd));
+}
+
+Void startMenuTask(UArg arg0, UArg arg1)
+{
+
+    while(1)
+    {
+
+    }
 }
 
 Void userInputTask(UArg arg0, UArg arg1)
@@ -206,6 +218,15 @@ int main(void)
     taskDeviceRespondParams.priority = 1;
     taskDeviceRespondParams.instance->name = "device respond";
     Task_construct(&taskDeviceRespondStruct, (Task_FuncPtr)deviceRespondTask, &taskDeviceRespondParams, NULL);
+
+    Task_Params taskStartMenuParams;
+
+    Task_Params_init(&taskStartMenuParams);
+    taskStartMenuParams.stackSize = TASKSTACKSIZE;
+    taskStartMenuParams.stack = &taskStartMenuStack;
+    taskStartMenuParams.priority = 1;
+    taskStartMenuParams.instance->name = "start menu";
+    Task_construct(&taskStartMenuStruct, (Task_FuncPtr)startMenuTask, &taskStartMenuParams, NULL);
 
     /* Turn on user LED */
     GPIO_write(Board_LED0, Board_LED_ON);
