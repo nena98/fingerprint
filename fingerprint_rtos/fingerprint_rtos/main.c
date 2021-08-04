@@ -117,6 +117,13 @@ Void startMenuTask(UArg arg0, UArg arg1)
 
     while(1)
     {
+        startOptions();
+
+        /* Wait for (Event_Id_00 & Event_Id_01)*/
+        Event_pend(evtHandle,
+                   Event_Id_00 + Event_Id_01,  /* andMask */
+                   Event_Id_NONE,                /* orMask */
+                   BIOS_WAIT_FOREVER);
 
     }
 }
@@ -129,7 +136,9 @@ Void userInputTask(UArg arg0, UArg arg1)
     {
         UART_read(uart0, &msg.cmd, 1);
 
+        /* Implicitly posts Event_Id_00 to evtHandle */
         Mailbox_post(mbxHandle, &msg,  BIOS_WAIT_FOREVER);
+
     }
 }
 
@@ -149,6 +158,9 @@ Void processingInputTask(UArg arg0, UArg arg1)
         default:
             break;
         }
+
+        /* Explicit posting of Event_Id_01 by calling Event_post() */
+        Event_post(evtHandle, Event_Id_01);
 
     }
 }
@@ -205,12 +217,25 @@ int main(void)
         System_abort("Error opening the UART5");
     }
 
+    /* Create event*/
+    Event_construct(&evtStruct, NULL);
+
+    /* Obtain event instance handle */
+    evtHandle = Event_handle(&evtStruct);
+
+    if (evtHandle == NULL) {
+        System_abort("Event create failed");
+    }
+
     /* Create mailbox*/
     Mailbox_Params mbxParams;
 
     Mailbox_Params_init(&mbxParams);
     mbxParams.buf = (Ptr)mailboxBuffer;
     mbxParams.bufSize = sizeof(mailboxBuffer);
+    mbxParams.readerEvent = evtHandle;
+    /* Assign Event_Id_00 to Mailbox "not empty" event */
+    mbxParams.readerEventId = Event_Id_00;
     Mailbox_construct(&mbxStruct, sizeof(MsgObj), NUMMSGS, &mbxParams, NULL);
     mbxHandle = Mailbox_handle(&mbxStruct);
 
@@ -250,12 +275,6 @@ int main(void)
     taskStartMenuParams.priority = 1;
     taskStartMenuParams.instance->name = "start menu";
     Task_construct(&taskStartMenuStruct, (Task_FuncPtr)startMenuTask, &taskStartMenuParams, NULL);
-
-    /* Create event*/
-    Event_construct(&evtStruct, NULL);
-
-    /* Obtain event instance handle */
-    evtHandle = Event_handle(&evtStruct);
 
     /* Turn on user LED */
     GPIO_write(Board_LED0, Board_LED_ON);
