@@ -79,7 +79,12 @@ Char taskProcessingInputStack[TASKSTACKSIZE];
 Task_Struct taskDeviceRespondStruct;
 Char taskDeviceRespondStack[TASKSTACKSIZE];
 
-char cmd1[] = "<C>CheckRegisteredNo</C>";
+void checkRegisteredNumber()
+{
+    char cmd[] = "<C>CheckRegisteredNo</C>";
+
+    UART_write(uart5, &cmd, sizeof(cmd));
+}
 
 Void userInputTask(UArg arg0, UArg arg1)
 {
@@ -104,7 +109,7 @@ Void processingInputTask(UArg arg0, UArg arg1)
         switch(msg.cmd)
         {
         case '1':
-            UART_write(uart5, &cmd1, sizeof(cmd1));
+            checkRegisteredNumber();
             break;
         default:
             break;
