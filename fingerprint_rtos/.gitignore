@@ -2,6 +2,7 @@
 /.jxbrowser-data/
 /.jxbrowser.userdata/
 /RemoteSystemsTempFiles/
+/uartecho_rtos/
 
 # Created by https://www.toptal.com/developers/gitignore/api/c,codecomposerstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,codecomposerstudio

@@ -40,7 +40,6 @@
 /* BIOS Header files */
 #include <ti/sysbios/BIOS.h>
 #include <ti/sysbios/knl/Task.h>
-#include <ti/sysbios/knl/Mailbox.h>
 #include <ti/sysbios/knl/Event.h>
 
 /* TI-RTOS Header files */
@@ -54,22 +53,6 @@
 
 UART_Handle uart0;
 UART_Handle uart5;
-
-#define NUMMSGS         1
-
-typedef struct MsgObj {
-    Char    cmd;
-} MsgObj;
-
-typedef struct MailboxMsgObj {
-    Mailbox_MbxElem  elem;      /* Mailbox header        */
-    MsgObj           data;       /* Application's mailbox */
-} MailboxMsgObj;
-
-MailboxMsgObj mailboxBuffer[NUMMSGS];
-
-Mailbox_Struct mbxStruct;
-Mailbox_Handle mbxHandle;
 
 Task_Struct taskUserInputStruct;
 Char taskUserInputStack[TASKSTACKSIZE];
@@ -136,9 +119,6 @@ Void userInputTask(UArg arg0, UArg arg1)
     {
         UART_read(uart0, &msg.cmd, 1);
 
-        /* Implicitly posts Event_Id_00 to evtHandle */
-        Mailbox_post(mbxHandle, &msg,  BIOS_WAIT_FOREVER);
-
     }
 }
 
@@ -148,7 +128,6 @@ Void processingInputTask(UArg arg0, UArg arg1)
 
     while(1)
     {
-        Mailbox_pend(mbxHandle, &msg,  BIOS_WAIT_FOREVER);
 
         switch(msg.cmd)
         {
@@ -226,18 +205,6 @@ int main(void)
     if (evtHandle == NULL) {
         System_abort("Event create failed");
     }
-
-    /* Create mailbox*/
-    Mailbox_Params mbxParams;
-
-    Mailbox_Params_init(&mbxParams);
-    mbxParams.buf = (Ptr)mailboxBuffer;
-    mbxParams.bufSize = sizeof(mailboxBuffer);
-    mbxParams.readerEvent = evtHandle;
-    /* Assign Event_Id_00 to Mailbox "not empty" event */
-    mbxParams.readerEventId = Event_Id_00;
-    Mailbox_construct(&mbxStruct, sizeof(MsgObj), NUMMSGS, &mbxParams, NULL);
-    mbxHandle = Mailbox_handle(&mbxStruct);
 
     /* Create tasks*/
     Task_Params taskUserInputParams;
