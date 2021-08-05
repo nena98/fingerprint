@@ -253,6 +253,13 @@ void registerOneFp(uint8_t index)
     }
 }
 
+void compareFingerprint()
+{
+    char op[] = "<C>CompareFingerprint</C>";
+
+    UART_write(uart5, &op, sizeof(op));
+}
+
 Void startMenuTask(UArg arg0, UArg arg1)
 {
 
