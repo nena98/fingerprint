@@ -144,6 +144,113 @@ void writeIndexMenu()
     UART_write(uart0, &op22, sizeof(op22));
     UART_write(uart0, &op23, sizeof(op23));
     UART_write(uart0, &op24, sizeof(op24));
+
+}
+
+void registerOneFp(uint8_t index)
+{
+    char op1[] = "<C>RegisterOneFp=0</C>";
+    char op2[] = "<C>RegisterOneFp=1</C>";
+    char op3[] = "<C>RegisterOneFp=2</C>";
+    char op4[] = "<C>RegisterOneFp=3</C>";
+    char op5[] = "<C>RegisterOneFp=4</C>";
+    char op6[] = "<C>RegisterOneFp=5</C>";
+    char op7[] = "<C>RegisterOneFp=6</C>";
+    char op8[] = "<C>RegisterOneFp=7</C>";
+    char op9[] = "<C>RegisterOneFp=8</C>";
+    char op10[] = "<C>RegisterOneFp=9</C>";
+    char op11[] = "<C>RegisterOneFp=10</C>";
+    char op12[] = "<C>RegisterOneFp=11</C>";
+    char op13[] = "<C>RegisterOneFp=12</C>";
+    char op14[] = "<C>RegisterOneFp=13</C>";
+    char op15[] = "<C>RegisterOneFp=14</C>";
+    char op16[] = "<C>RegisterOneFp=15</C>";
+    char op17[] = "<C>RegisterOneFp=16</C>";
+    char op18[] = "<C>RegisterOneFp=17</C>";
+    char op19[] = "<C>RegisterOneFp=18</C>";
+    char op20[] = "<C>RegisterOneFp=19</C>";
+    char op21[] = "<C>RegisterOneFp=20</C>";
+    char op22[] = "<C>RegisterOneFp=21</C>";
+    char op23[] = "<C>RegisterOneFp=22</C>";
+    char op24[] = "<C>RegisterOneFp=23</C>";
+
+    switch(index)
+    {
+    case 'a':
+        UART_write(uart5, &op1, sizeof(op1));
+        break;
+    case 'b':
+        UART_write(uart5, &op2, sizeof(op2));
+        break;
+    case 'c':
+        UART_write(uart5, &op3, sizeof(op3));
+        break;
+    case 'd':
+        UART_write(uart5, &op4, sizeof(op4));
+        break;
+    case 'e':
+        UART_write(uart5, &op5, sizeof(op5));
+        break;
+    case 'f':
+        UART_write(uart5, &op6, sizeof(op6));
+        break;
+    case 'g':
+        UART_write(uart5, &op7, sizeof(op7));
+        break;
+    case 'h':
+        UART_write(uart5, &op8, sizeof(op8));
+        break;
+    case 'i':
+        UART_write(uart5, &op9, sizeof(op9));
+        break;
+    case 'j':
+        UART_write(uart5, &op10, sizeof(op10));
+        break;
+    case 'k':
+        UART_write(uart5, &op11, sizeof(op11));
+        break;
+    case 'l':
+        UART_write(uart5, &op12, sizeof(op12));
+        break;
+    case 'm':
+        UART_write(uart5, &op13, sizeof(op13));
+        break;
+    case 'n':
+        UART_write(uart5, &op14, sizeof(op14));
+        break;
+    case 'o':
+        UART_write(uart5, &op15, sizeof(op15));
+        break;
+    case 'p':
+        UART_write(uart5, &op16, sizeof(op16));
+        break;
+    case 'q':
+        UART_write(uart5, &op17, sizeof(op17));
+        break;
+    case 'r':
+        UART_write(uart5, &op18, sizeof(op18));
+        break;
+    case 's':
+        UART_write(uart5, &op19, sizeof(op19));
+        break;
+    case 't':
+        UART_write(uart5, &op20, sizeof(op20));
+        break;
+    case 'u':
+        UART_write(uart5, &op21, sizeof(op21));
+        break;
+    case ('v'):
+        UART_write(uart5, &op22, sizeof(op22));
+        break;
+    case ('w'):
+        UART_write(uart5, &op23, sizeof(op23));
+        break;
+    case ('x'):
+        UART_write(uart5, &op24, sizeof(op24));
+        break;
+    default:
+        break;
+    }
 }
 
 Void startMenuTask(UArg arg0, UArg arg1)
