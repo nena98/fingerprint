@@ -313,6 +313,9 @@ Void processingInputTask(UArg arg0, UArg arg1)
         case '3':
             compareFingerprint();
             break;
+        case '4':
+            fpImageInformation();
+            break;
         default:
             break;
         }
