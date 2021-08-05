@@ -273,6 +273,7 @@ Void processingInputTask(UArg arg0, UArg arg1)
 {
     char cmd;
     uint8_t posted = 0;
+    uint8_t index;
 
     while(1)
     {
@@ -289,6 +290,11 @@ Void processingInputTask(UArg arg0, UArg arg1)
         {
         case '1':
             checkRegisteredNumber();
+            break;
+        case '2':
+            writeIndexMenu();
+            UART_read(uart0, &index, 1);
+            registerOneFp(index);
             break;
         default:
             break;
