@@ -260,6 +260,13 @@ void compareFingerprint()
     UART_write(uart5, &op, sizeof(op));
 }
 
+void fpImageInformation()
+{
+    char op[] = "<C>FpImageInformation</C>";
+
+    UART_write(uart5, &op, sizeof(op));
+}
+
 Void startMenuTask(UArg arg0, UArg arg1)
 {
 
