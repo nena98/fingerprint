@@ -303,6 +303,9 @@ Void processingInputTask(UArg arg0, UArg arg1)
             UART_read(uart0, &index, 1);
             registerOneFp(index);
             break;
+        case '3':
+            compareFingerprint();
+            break;
         default:
             break;
         }
