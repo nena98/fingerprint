@@ -419,6 +419,11 @@ Void processingInputTask(UArg arg0, UArg arg1)
         case '4':
             fpImageInformation();
             break;
+        case '5':
+            writeIndexMenu();
+            UART_read(uart0, &index, 1);
+            clearOneFp(index);
+            break;
         default:
             break;
         }
