@@ -97,7 +97,7 @@ void writeIndexMenu()
     char op3[] = "c. 2-index\r\n";
     char op4[] = "d. 3-index\r\n";
     char op5[] = "e. 4-index\r\n";
-    char op6[] = "f 5-index\r\n";
+    char op6[] = "f. 5-index\r\n";
     char op7[] = "g. 6-index\r\n";
     char op8[] = "h. 7-index\r\n";
     char op9[] = "i. 8-index\r\n";
@@ -143,6 +143,13 @@ void writeIndexMenu()
     UART_write(uart0, &op23, sizeof(op23));
     UART_write(uart0, &op24, sizeof(op24));
 
+}
+
+void writeWarning()
+{
+    char w[] = "Wrong input! Press anything to continue!\r\n";
+
+    UART_write(uart0, &w, sizeof(w));
 }
 
 void registerOneFp(uint8_t index)
@@ -247,6 +254,7 @@ void registerOneFp(uint8_t index)
         UART_write(uart5, &op24, sizeof(op24));
         break;
     default:
+        writeWarning();
         break;
     }
 }
@@ -367,9 +375,11 @@ void clearOneFp(uint8_t delete_index)
         UART_write(uart5, &op24, sizeof(op24));
         break;
     default:
+        writeWarning();
         break;
     }
 }
+
 Void startMenuTask(UArg arg0, UArg arg1)
 {
 
@@ -425,6 +435,7 @@ Void processingInputTask(UArg arg0, UArg arg1)
             clearOneFp(index);
             break;
         default:
+            writeWarning();
             break;
         }
 
