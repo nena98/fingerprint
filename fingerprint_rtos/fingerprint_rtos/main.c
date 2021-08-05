@@ -110,12 +110,13 @@ Void startMenuTask(UArg arg0, UArg arg1)
 
 Void processingInputTask(UArg arg0, UArg arg1)
 {
-    MsgObj msg;
+    char cmd;
 
     while(1)
     {
+        UART_read(uart0, &cmd, 1);
 
-        switch(msg.cmd)
+        switch(cmd)
         {
         case '1':
             checkRegisteredNumber();
