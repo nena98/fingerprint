@@ -54,9 +54,6 @@
 UART_Handle uart0;
 UART_Handle uart5;
 
-Task_Struct taskUserInputStruct;
-Char taskUserInputStack[TASKSTACKSIZE];
-
 Task_Struct taskProcessingInputStruct;
 Char taskProcessingInputStack[TASKSTACKSIZE];
 
@@ -107,17 +104,6 @@ Void startMenuTask(UArg arg0, UArg arg1)
                    Event_Id_00 + Event_Id_01,  /* andMask */
                    Event_Id_NONE,                /* orMask */
                    BIOS_WAIT_FOREVER);
-
-    }
-}
-
-Void userInputTask(UArg arg0, UArg arg1)
-{
-    MsgObj msg;
-
-    while(1)
-    {
-        UART_read(uart0, &msg.cmd, 1);
 
     }
 }
@@ -207,15 +193,6 @@ int main(void)
     }
 
     /* Create tasks*/
-    Task_Params taskUserInputParams;
-
-    Task_Params_init(&taskUserInputParams);
-    taskUserInputParams.stackSize = TASKSTACKSIZE;
-    taskUserInputParams.stack = &taskUserInputStack;
-    taskUserInputParams.priority = 2;
-    taskUserInputParams.instance->name = "user input";
-    Task_construct(&taskUserInputStruct, (Task_FuncPtr)userInputTask, &taskUserInputParams, NULL);
-
     Task_Params taskProcessingInputParams;
 
     Task_Params_init(&taskProcessingInputParams);
