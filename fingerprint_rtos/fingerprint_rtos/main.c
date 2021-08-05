@@ -92,6 +92,60 @@ void startOptions()
     UART_write(uart0, &op7, sizeof(op7));
 }
 
+void writeIndexMenu()
+{
+    char op1[] = "a. 0-index\r\n";
+    char op2[] = "b. 1-index\r\n";
+    char op3[] = "c. 2-index\r\n";
+    char op4[] = "d. 3-index\r\n";
+    char op5[] = "e. 4-index\r\n";
+    char op6[] = "f 5-index\r\n";
+    char op7[] = "g. 6-index\r\n";
+    char op8[] = "h. 7-index\r\n";
+    char op9[] = "i. 8-index\r\n";
+    char op10[] = "j. 9-index\r\n";
+    char op11[] = "k. 10-index\r\n";
+    char op12[] = "l. 11-index\r\n";
+    char op13[] = "m. 12-index\r\n";
+    char op14[] = "n. 13-index\r\n";
+    char op15[] = "o. 14-index\r\n";
+    char op16[] = "p. 15-index\r\n";
+    char op17[] = "q. 16-index\r\n";
+    char op18[] = "r. 17-index\r\n";
+    char op19[] = "s. 18-index\r\n";
+    char op20[] = "t. 19-index\r\n";
+    char op21[] = "u. 20-index\r\n";
+    char op22[] = "v. 21-index\r\n";
+    char op23[] = "w. 22-index\r\n";
+    char op24[] = "x. 23-index\r\n";
+
+    //write menu
+    UART_write(uart0, &op1, sizeof(op1));
+    UART_write(uart0, &op2, sizeof(op2));
+    UART_write(uart0, &op3, sizeof(op3));
+    UART_write(uart0, &op4, sizeof(op4));
+    UART_write(uart0, &op5, sizeof(op5));
+    UART_write(uart0, &op6, sizeof(op6));
+    UART_write(uart0, &op7, sizeof(op7));
+    UART_write(uart0, &op8, sizeof(op8));
+    UART_write(uart0, &op9, sizeof(op9));
+    UART_write(uart0, &op10, sizeof(op10));
+    UART_write(uart0, &op11, sizeof(op11));
+    UART_write(uart0, &op12, sizeof(op12));
+    UART_write(uart0, &op13, sizeof(op13));
+    UART_write(uart0, &op14, sizeof(op14));
+    UART_write(uart0, &op15, sizeof(op15));
+    UART_write(uart0, &op16, sizeof(op16));
+    UART_write(uart0, &op17, sizeof(op17));
+    UART_write(uart0, &op18, sizeof(op18));
+    UART_write(uart0, &op19, sizeof(op19));
+    UART_write(uart0, &op20, sizeof(op20));
+    UART_write(uart0, &op21, sizeof(op21));
+    UART_write(uart0, &op22, sizeof(op22));
+    UART_write(uart0, &op23, sizeof(op23));
+    UART_write(uart0, &op24, sizeof(op24));
+}
+
 Void startMenuTask(UArg arg0, UArg arg1)
 {
 
