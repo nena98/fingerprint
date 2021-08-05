@@ -49,7 +49,7 @@
 /* Board Header file */
 #include "Board.h"
 
-#define TASKSTACKSIZE   512
+#define TASKSTACKSIZE   512*4
 
 UART_Handle uart0;
 UART_Handle uart5;
