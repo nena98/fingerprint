@@ -111,10 +111,18 @@ Void startMenuTask(UArg arg0, UArg arg1)
 Void processingInputTask(UArg arg0, UArg arg1)
 {
     char cmd;
+    uint8_t posted = 0;
 
     while(1)
     {
         UART_read(uart0, &cmd, 1);
+
+        if(posted == 1)
+        {
+            posted = 0;
+            Event_post(evtHandle, Event_Id_00);
+            continue;
+        }
 
         switch(cmd)
         {
@@ -127,6 +135,7 @@ Void processingInputTask(UArg arg0, UArg arg1)
 
         /* Explicit posting of Event_Id_01 by calling Event_post() */
         Event_post(evtHandle, Event_Id_01);
+        posted = 1;
 
     }
 }
